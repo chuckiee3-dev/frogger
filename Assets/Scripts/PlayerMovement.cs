@@ -4,6 +4,10 @@ public class PlayerMovement : MonoBehaviour
 {
     private Camera _camera;
     private float _screenLimit;
+    private Vector3 _targetPos;
+    private float _movementDuration = .325f;
+    private float _movementTimer;
+    private bool _isMoving;
     private void Awake()
     {
         _camera = Camera.main;
@@ -20,7 +24,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        ProcessMovementInput();
+        if (_isMoving)
+        {
+            ProcessMovement();
+        }
+        if(!_isMoving){
+            ProcessMovementInput();
+        }
+    }
+
+    private void ProcessMovement()
+    {
+        if ((transform.position - _targetPos).sqrMagnitude > 0.0001f)
+        {
+            _movementTimer += Time.deltaTime;
+            float percent = Mathf.Clamp01(_movementTimer / _movementDuration);
+            transform.position = Vector3.Lerp(transform.position, _targetPos, percent);
+        }
+        else
+        {
+            _isMoving = false;
+        }
     }
 
     private void ProcessMovementInput()
@@ -30,14 +54,14 @@ public class PlayerMovement : MonoBehaviour
             if (transform.position.y < _screenLimit)
             {
                 RotateUp();
-                Move(Vector2.up);
+                SetTargetPos(Vector2.up);
             }
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             if(transform.position.y > -_screenLimit){
                 RotateDown();
-                Move(Vector2.down);
+                SetTargetPos(Vector2.down);
             }
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
@@ -45,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
             if (transform.position.x < _screenLimit)
             {
                 RotateRight();
-                Move(Vector2.right);
+                SetTargetPos(Vector2.right);
             }
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
@@ -53,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
             if (transform.position.x > -_screenLimit)
             {
                 RotateLeft();
-                Move(Vector2.left);
+                SetTargetPos(Vector2.left);
             }
         }
     }
@@ -75,8 +99,10 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, 90);
     }
 
-    private void Move(Vector3 movement)
+    private void SetTargetPos(Vector3 movement)
     {
-        transform.position += movement;
+        _movementTimer = 0f;
+        _isMoving = true;
+        _targetPos = transform.position + movement;
     }
 }
