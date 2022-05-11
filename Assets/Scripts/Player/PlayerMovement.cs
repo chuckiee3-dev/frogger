@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Camera _camera;
     private float _screenLimit;
-    private Vector3 _targetPos;
+    
     private float _movementDuration = .325f;
     private float _movementTimer;
+    
     private bool _isMoving;
+    private Vector3 _targetPos;
+    
+    private Camera _camera;
     private void Awake()
     {
         _camera = Camera.main;
@@ -17,8 +20,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            //Defaults to 8 camera size
-            _screenLimit = 6.5f;
+            _screenLimit = GameData.defaultScreenLimit;
         }
     }
 
@@ -43,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            PlayerActions.MovementEnd();
             _isMoving = false;
         }
     }
@@ -101,6 +104,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetTargetPos(Vector3 movement)
     {
+        PlayerActions.MovementStart();
         _movementTimer = 0f;
         _isMoving = true;
         _targetPos = transform.position + movement;

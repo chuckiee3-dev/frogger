@@ -1,4 +1,5 @@
 public static class GameData
 {
-    public static float lowerYLimit = -6.5f;
+    //Default is 8 camera size
+    public static readonly float defaultScreenLimit = 6.5f;
 }
