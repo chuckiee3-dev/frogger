@@ -113,4 +113,10 @@ MonoBehaviour:
   dangerLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  platformLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  waterLayerMask:
+    serializedVersion: 2
+    m_Bits: 16
   collisionSize: 0.75
