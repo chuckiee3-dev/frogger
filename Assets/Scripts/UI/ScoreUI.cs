@@ -13,11 +13,13 @@ public class ScoreUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreTMP;
 
     private int _currentScore;
-
+    private int _scoreRequiredPerLife = 20000;
+    private int _nextLifeRewardScore;
     private void Awake()
     {
         _currentScore = 0;
         scoreTMP.text = _currentScore.ToString();
+        _nextLifeRewardScore = _scoreRequiredPerLife;
     }
 
     private void OnEnable()
@@ -51,10 +53,18 @@ public class ScoreUI : MonoBehaviour
     private void AddScore(int scoreToAdd)
     {
         _currentScore += scoreToAdd;
+        CheckEarnedExtraLife();
         scoreTMP.text = _currentScore.ToString();
         ScoreActions.ScoreUpdated(_currentScore);
     }
-    
+
+    private void CheckEarnedExtraLife()
+    {
+        if (_currentScore < _nextLifeRewardScore) return;
+        _nextLifeRewardScore += _scoreRequiredPerLife;
+        GameActions.PlayerEarnLife();
+    }
+
     private void ResetScore()
     {
         _currentScore = 0;

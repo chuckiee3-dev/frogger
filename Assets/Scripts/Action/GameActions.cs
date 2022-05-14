@@ -8,10 +8,14 @@ public static class GameActions
     public static Action onPlayerEarnLife;
     public static Action onPlayerRevive;
     public static Action<int> onPlayerLifeUpdated;
-    public static Action onGameOver;
+    
     public static Action onLevelComplete;
+    
     public static Action onGameStart;
+    public static Action onGameOver;
+    public static Action onGameRestart;
     public static Action onTimeOver;
+    public static Action onLevelReloaded;
 
     public static void PlayerFillSlot()
     {
@@ -55,5 +59,16 @@ public static class GameActions
     public static void TimeOver()
     {
         onTimeOver?.Invoke();
+    }
+
+    public static void RestartGame()
+    {
+        
+        onGameRestart?.Invoke();
+    }
+
+    public static void LevelReloaded()
+    {
+        onLevelReloaded?.Invoke();
     }
 }

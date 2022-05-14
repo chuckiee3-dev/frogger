@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalLives: 5
+  levelPrefab: {fileID: 4626929223717531257, guid: 930b2a6004843194385c1729d2f3955e, type: 3}

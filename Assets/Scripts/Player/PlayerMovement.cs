@@ -127,6 +127,8 @@ public class PlayerMovement : MonoBehaviour
         GameActions.onTimeOver += ResetToStartState;
         GameActions.onPlayerLoseLife += DisableMovement;
         GameActions.onPlayerRevive += EnableMovement;
+        GameActions.onLevelComplete += DisableMovement;
+        GameActions.onLevelReloaded += EnableMovement;
     }
 
     private void OnDisable()
@@ -135,9 +137,14 @@ public class PlayerMovement : MonoBehaviour
         GameActions.onTimeOver -= ResetToStartState;
         GameActions.onPlayerLoseLife -= DisableMovement;
         GameActions.onPlayerRevive -= EnableMovement;
+        GameActions.onLevelComplete -= DisableMovement;
+        GameActions.onLevelReloaded -= EnableMovement;
     }
     private void DisableMovement()
     {
+        
+        transform.position = _startPosition;
+        _targetPos = _startPosition;
         _canMove = false;
     }
     private void EnableMovement()
