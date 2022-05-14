@@ -17,7 +17,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875341796656477464, guid: ba91dabb140338b40929e70c9d4202ff, type: 3}
       propertyPath: m_Name
-      value: Log_Long
+      value: Log_Long_Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3875341796656477466, guid: ba91dabb140338b40929e70c9d4202ff, type: 3}
       propertyPath: m_Size.x
@@ -75,5 +75,26 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3875341796656477467, guid: ba91dabb140338b40929e70c9d4202ff, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ba91dabb140338b40929e70c9d4202ff, type: 3}
+--- !u!1 &1988972633143628899 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3875341796656477464, guid: ba91dabb140338b40929e70c9d4202ff, type: 3}
+  m_PrefabInstance: {fileID: 3341031860402725243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3956340223259702255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988972633143628899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c287e73c18eaa444d9f11ff41cc424b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
+  movementSpeed: 3.5
+  extraIndent: 2

@@ -19,8 +19,12 @@ public class TurtleGroup : MonoBehaviour
     private bool _isAnimating;
 
     private WaitForSeconds _animWait;
+    private WaitForSeconds _animMinusStepWait;
+    private WaitForSeconds _stepWait;
     
     private TurtleGroupAnimator _animator;
+
+    public bool IsSafe => _isSafe;
     
     public Action onStartGoingDown;
     public Action onEndGoingDown;
@@ -33,6 +37,12 @@ public class TurtleGroup : MonoBehaviour
         _safeDuration = Random.Range(safeDurationRange.x, safeDurationRange.y);
         _unsafeDuration = Random.Range(unsafeDurationRange.x, unsafeDurationRange.y);
         _isSafe = true;
+    }
+
+    private void Start()
+    {
+        _animMinusStepWait = new WaitForSeconds(_animator.AnimationDuration - _animator.StepDuration);
+        _stepWait = new WaitForSeconds(_animator.StepDuration);
     }
 
     private void Update()
@@ -90,9 +100,10 @@ public class TurtleGroup : MonoBehaviour
 
     private IEnumerator EndGoingUpWithDelay()
     {
-        yield return _animWait;
-        onEndGoingUp?.Invoke();
+        yield return _stepWait;
         _isSafe = true;
+        yield return _animMinusStepWait;
+        onEndGoingUp?.Invoke();
         _isAnimating = false;
         _unsafeTimer = 0;
         

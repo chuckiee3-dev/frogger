@@ -8,8 +8,9 @@ public class TurtleGroupAnimator : MonoBehaviour
     [SerializeField] private Sprite[] animSprites;
     private SpriteRenderer[] _turtles;
     public float AnimationDuration => animationDuration;
-
+    private float _stepDuration;
     private WaitForSeconds _stepWait;
+    public float StepDuration => _stepDuration;
     private void Awake()
     {
         _turtles = GetComponentsInChildren<SpriteRenderer>();
@@ -19,7 +20,9 @@ public class TurtleGroupAnimator : MonoBehaviour
             Debug.LogError("Animating turtles requires at least 2 sprites!");
             return;
         }
-        _stepWait = new WaitForSeconds(animationDuration / animSprites.Length);
+
+        _stepDuration = animationDuration / animSprites.Length;
+        _stepWait = new WaitForSeconds(_stepDuration);
 
         ResetTurtles();
     }

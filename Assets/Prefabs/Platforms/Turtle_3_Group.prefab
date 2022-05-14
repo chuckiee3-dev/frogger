@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e48eacde70797c448ab4e418fa4e5974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationDuration: 1
+  animationDuration: 4
   animSprites:
   - {fileID: 21300000, guid: 2b2bc15506627c74ab1296154f937a65, type: 3}
   - {fileID: 21300000, guid: fe4d14de0349a284ead1720f71aa4859, type: 3}

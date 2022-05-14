@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
@@ -9,6 +10,20 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField] private float collisionSize;
 
     private TurtleGroup _currentTurtleGroup;
+    
+    private void Update()
+    {
+        var pos = transform.position;
+        if (pos.x > GameData.defaultScreenLimit + .25f || pos.x < -GameData.defaultScreenLimit - .25f)
+        {
+            transform.parent = null;
+            CheckForCollisions();
+        }
+        
+        pos.x = Mathf.Clamp(pos.x, -GameData.defaultScreenLimit  - .25f, GameData.defaultScreenLimit  + .25f);
+        transform.position = pos;
+    }
+
     private void CheckForCollisions()
     {
         if (Physics2D.OverlapBox(transform.position, Vector2.one * collisionSize, 0,dangerLayerMask))
@@ -57,6 +72,10 @@ public class PlayerCollision : MonoBehaviour
         if (platform.TryGetComponent(out _currentTurtleGroup))
         {
             _currentTurtleGroup.onEndGoingDown += LoseLife;
+            if (!_currentTurtleGroup.IsSafe)
+            {
+                GameActions.PlayerLoseLife();
+            }
         }
     }
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MovingObject : MonoBehaviour
@@ -6,8 +7,10 @@ public class MovingObject : MonoBehaviour
     [SerializeField] private float movementSpeed;
 
     private Vector3 _movementVector;
+    protected float boundX;
     private void Awake()
     {
+        boundX = GameData.defaultScreenLimit + 2;
         CalculateMovementVector();
     }
 
@@ -32,9 +35,9 @@ public class MovingObject : MonoBehaviour
         }
     }
 
-    private bool IsOutOfBounds(Vector3 pos)
+    protected virtual bool IsOutOfBounds(Vector3 pos)
     {
-        return pos.x > 10 || pos.x < -10;
+        return pos.x > boundX || pos.x < -boundX;
     }
 #if UNITY_EDITOR
     private void OnValidate()

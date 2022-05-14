@@ -11,21 +11,12 @@ public class PlayerMovement : MonoBehaviour
     private bool _isMoving;
     private Vector3 _targetPos;
     
-    private Camera _camera;
     private Vector3 _startPosition;
     private bool _canMove;
     private void Awake()
     {
-        _camera = Camera.main;
         _startPosition = transform.position;
-        if (_camera != null)
-        {
-            _screenLimit = _camera.orthographicSize -1f;
-        }
-        else
-        {
-            _screenLimit = GameData.defaultScreenLimit;
-        }
+        _screenLimit = GameData.defaultScreenLimit;
 
         _canMove = true;
     }
