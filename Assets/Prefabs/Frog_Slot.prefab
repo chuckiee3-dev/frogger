@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8419689594682064845}
   m_Layer: 8
   m_Name: Frog_Slot
-  m_TagString: Untagged
+  m_TagString: Slot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

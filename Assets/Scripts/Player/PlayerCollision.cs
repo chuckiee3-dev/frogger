@@ -89,7 +89,7 @@ public class PlayerCollision : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawCube(transform.position, Vector3.one * collisionSize);
+        Gizmos.DrawWireCube(transform.position, Vector3.one * collisionSize);
     }
 #endif
 }

@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     
     private Camera _camera;
     private Vector3 _startPosition;
+    private bool _canMove;
     private void Awake()
     {
         _camera = Camera.main;
@@ -25,10 +26,13 @@ public class PlayerMovement : MonoBehaviour
         {
             _screenLimit = GameData.defaultScreenLimit;
         }
+
+        _canMove = true;
     }
 
     private void Update()
     {
+        if(!_canMove) return;
         if (_isMoving)
         {
             ProcessMovement();
@@ -62,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 RotateUp();
                 SetTargetPos(Vector2.up);
+                PlayerActions.GoUp();
             }
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
@@ -128,11 +133,27 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         GameActions.onPlayerFillSlot += ResetToStartState;
+        GameActions.onTimeOver += ResetToStartState;
+        GameActions.onPlayerLoseLife += DisableMovement;
+        GameActions.onPlayerRevive += EnableMovement;
     }
 
     private void OnDisable()
     {
         GameActions.onPlayerFillSlot -= ResetToStartState;
+        GameActions.onTimeOver -= ResetToStartState;
+        GameActions.onPlayerLoseLife -= DisableMovement;
+        GameActions.onPlayerRevive -= EnableMovement;
     }
+    private void DisableMovement()
+    {
+        _canMove = false;
+    }
+    private void EnableMovement()
+    {
+        ResetToStartState();
+        _canMove = true;
+    }
+
 
 }
