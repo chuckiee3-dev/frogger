@@ -142,8 +142,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void DisableMovement()
     {
-        
-        transform.position = _startPosition;
         _targetPos = _startPosition;
         _canMove = false;
     }
