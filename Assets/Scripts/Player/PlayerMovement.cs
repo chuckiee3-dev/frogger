@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -11,9 +12,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _targetPos;
     
     private Camera _camera;
+    private Vector3 _startPosition;
     private void Awake()
     {
         _camera = Camera.main;
+        _startPosition = transform.position;
         if (_camera != null)
         {
             _screenLimit = _camera.orthographicSize -1f;
@@ -37,14 +40,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void ProcessMovement()
     {
-        if ((transform.position - _targetPos).sqrMagnitude > 0.0001f)
+        if ((transform.localPosition - _targetPos).sqrMagnitude > 0.0001f)
         {
             _movementTimer += Time.deltaTime;
             float percent = Mathf.Clamp01(_movementTimer / _movementDuration);
-            transform.position = Vector3.Lerp(transform.position, _targetPos, percent);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, _targetPos, percent);
         }
         else
         {
+            transform.localPosition = _targetPos;
             PlayerActions.MovementEnd();
             _isMoving = false;
         }
@@ -62,7 +66,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if(transform.position.y > -_screenLimit){
+            //+1 to account for timer & life UI
+            if(transform.position.y > -_screenLimit + 1f){
                 RotateDown();
                 SetTargetPos(Vector2.down);
             }
@@ -77,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (transform.position.x > -_screenLimit)
+            if (transform.position.x > -_screenLimit )
             {
                 RotateLeft();
                 SetTargetPos(Vector2.left);
@@ -107,6 +112,27 @@ public class PlayerMovement : MonoBehaviour
         PlayerActions.MovementStart();
         _movementTimer = 0f;
         _isMoving = true;
-        _targetPos = transform.position + movement;
+        var pos = transform.localPosition;
+        if(transform.parent != null){
+            pos.y = 0;
+        }
+        _targetPos = pos + movement;
     }
+
+    private void ResetToStartState()
+    {
+        transform.parent = null;
+        transform.position = _startPosition;
+        RotateUp();
+    }
+    private void OnEnable()
+    {
+        GameActions.onPlayerFillSlot += ResetToStartState;
+    }
+
+    private void OnDisable()
+    {
+        GameActions.onPlayerFillSlot -= ResetToStartState;
+    }
+
 }

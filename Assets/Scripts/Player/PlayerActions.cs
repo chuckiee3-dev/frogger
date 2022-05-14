@@ -15,11 +15,6 @@ public static class PlayerActions
     {
         onMovementEnd?.Invoke();
     }
-    public static void PlayerLoseLife()
-    {
-        Debug.Log("Lose life");
-        onLoseLife?.Invoke();
-    }
 
     
 }
